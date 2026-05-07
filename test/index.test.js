@@ -8,20 +8,20 @@ describe("index", () => {
     sinon.restore();
   });
 
-  it("should export accessory", () => {
-    const registerStub = sinon.stub();
-    const accessoryStub = sinon.stub();
+  it("should export platform", () => {
+    const registerPlatformStub = sinon.stub();
+    const platformStub = sinon.stub();
     const HomebridgeMock = {
-      registerAccessory: registerStub,
+      registerPlatform: registerPlatformStub,
     };
     proxyquire("../index", {
-      "./lib/accessory": () => ({ HygrothermographAccessory: accessoryStub }),
+      "./lib/platform": () => ({ HygrothermographPlatform: platformStub }),
     })(HomebridgeMock);
     assert(
-      registerStub.calledWith(
-        "homebridge-mi-hygrothermograph",
+      registerPlatformStub.calledWith(
+        "homebridge-mi-hygrothermograph-hb2",
         "Hygrotermograph",
-        accessoryStub
+        platformStub
       )
     );
   });
