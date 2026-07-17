@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.5.3
+
+* Added a missing `name` property to the platform config schema, flagged by Homebridge plugin verification.
+
 ## 3.5.2
 
 **Breaking change:** this release converts the plugin from a Homebridge accessory
