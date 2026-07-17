@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.5.2-beta.0
+
+* Converted the plugin to a Homebridge dynamic platform (was an accessory plugin).
+* Fixed an invalid `required` field in `config.schema.json` flagged by Homebridge plugin verification.
+* Added a GitHub Actions workflow to publish to npm automatically when a release is published.
+
 ## 3.5.1
 
 * Updated repository metadata after the GitHub repository rename.
