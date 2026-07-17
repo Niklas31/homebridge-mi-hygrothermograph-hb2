@@ -6,6 +6,11 @@
   "schema": {
     "type": "object",
     "properties": {
+      "name": {
+        "title": "Name",
+        "type": "string",
+        "default": "Hygrotermograph"
+      },
       "accessories": {
         "title": "Accessories",
         "type": "array",
