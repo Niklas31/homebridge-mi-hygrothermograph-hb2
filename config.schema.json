@@ -18,8 +18,7 @@
               "type": "string",
               "format": "string",
               "default": "Temperature & Humidity",
-              "minLength": 1,
-              "required": true
+              "minLength": 1
             },
             "type": {
               "type": "string",
@@ -192,7 +191,8 @@
                 }
               }
             }
-          }
+          },
+          "required": ["name"]
         }
       }
     }
