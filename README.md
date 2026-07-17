@@ -53,17 +53,22 @@ Please see the [Noble documentation](https://github.com/noble/noble#running-with
 Update your Homebridge `config.json` file. See [config-sample.json](config-sample.json) for a complete example.
 
 ```json
-"accessories": [
+"platforms": [
     {
-      "accessory": "Hygrotermograph",
-      "name": "Temperature & Humidity"
+      "platform": "Hygrotermograph",
+      "accessories": [
+        {
+          "name": "Temperature & Humidity"
+        }
+      ]
     }
 ]
 ```
 
 | Key                     | Default             | Description                                                                                                                                                                                                 |
 |-------------------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `accessory`             |                     | Mandatory. The name provided to Homebridge. Must be "Hygrotermograph".                                                                                                                                      |
+| `platform`              |                     | Mandatory. The platform name provided to Homebridge. Must be "Hygrotermograph".                                                                                                                             |
+| `accessories`           | `[]`                | List of sensors to expose as HomeKit accessories.                                                                                                                                                           |
 | `type`                  | `"Hygrotermograph"` | Optional. The type of accessory. `"Hygrotermograph"` or `"MiFlora"`                                                                                                                                         |
 | `name`                  |                     | Mandatory. The name of this accessory. This will appear in your Home-app.                                                                                                                                   |
 | `address`               |                     | Optional. The address of the device. Used when running multiple devices.                                                                                                                                    |
@@ -102,22 +107,24 @@ The address is in the format of `4c:64:a8:d0:ae:65`.
 Update your Homebridge `config.json` and specify the `address` key:
 
 ```json
-"accessories": [
+"platforms": [
     {
-      "accessory": "Hygrotermograph",
-      "name": "Room 1",
-      "address": "4c:64:a8:d0:ae:65"
-    },
-    {
-      "accessory": "Hygrotermograph",
-      "name": "Room 2",
-      "address": "2c:34:b3:d4:a1:61"
-    },
-    {
-      "accessory": "Hygrotermograph",
-      "type": "MiFlora",
-      "name": "Garden",
-      "address": "2f:34:b5:d4:a2:20"
+      "platform": "Hygrotermograph",
+      "accessories": [
+        {
+          "name": "Room 1",
+          "address": "4c:64:a8:d0:ae:65"
+        },
+        {
+          "name": "Room 2",
+          "address": "2c:34:b3:d4:a1:61"
+        },
+        {
+          "type": "MiFlora",
+          "name": "Garden",
+          "address": "2f:34:b5:d4:a2:20"
+        }
+      ]
     }
 ]
 ```
@@ -140,11 +147,15 @@ that the accessory is not responsive by returning an error until it receives an 
 The default timeout is 15 minutes but can be changed by specifying the number of minutes under the `timeout` parameter in `config.json`:
 
 ```json
-"accessories": [
+"platforms": [
     {
-      "accessory": "Hygrotermograph",
-      "name": "Temperature & Humidity",
-      "timeout": 30
+      "platform": "Hygrotermograph",
+      "accessories": [
+        {
+          "name": "Temperature & Humidity",
+          "timeout": 30
+        }
+      ]
     }
 ]
 ```
