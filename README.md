@@ -1,5 +1,4 @@
 # homebridge-mi-hygrothermograph-hb2
-[![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
 [![npm](https://img.shields.io/npm/v/homebridge-mi-hygrothermograph-hb2.svg)](https://www.npmjs.com/package/homebridge-mi-hygrothermograph-hb2)
 
 [Homebridge](https://github.com/nfarina/homebridge) plugin for exposing measured temperature, humidity and plant metrics from Xiaomi sensors as [HomeKit](https://www.apple.com/ios/home/) accessories.
@@ -48,6 +47,20 @@ sudo setcap cap_net_raw+eip $(eval readlink -f `which node`)
 
 Please see the [Noble documentation](https://github.com/noble/noble#running-without-rootsudo) for more details.
 
+
+## Upgrading from 3.5.1 or earlier
+Versions before 3.5.2 registered each sensor as an individual Homebridge **accessory**
+(`"accessory": "Hygrotermograph"` entries directly under the top-level `accessories` array).
+Starting with 3.5.2 the plugin is a Homebridge **platform** instead. Old-format config
+entries are not recognized anymore and your sensors will disappear from HomeKit until you
+migrate them to the new format below: wrap your existing accessory entries in a single
+`platforms` block, drop the `accessory` key from each one (it's replaced by the platform's
+`accessories` array), and keep every other key (`type`, `address`, `temperatureName`, etc.)
+unchanged.
+
+Note that HomeKit may see the migrated sensors as new accessories (different internal ID),
+so you might need to remove the old ones from the Home app and redo room assignments or
+automations that referenced them.
 
 ## Homebridge configuration
 Update your Homebridge `config.json` file. See [config-sample.json](config-sample.json) for a complete example.

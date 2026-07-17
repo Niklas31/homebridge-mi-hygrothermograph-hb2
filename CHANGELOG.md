@@ -1,10 +1,25 @@
 # Changelog
 
-## 3.5.2-beta.1
+## 3.5.2
 
-* Fixed the npm publish workflow failing due to an npm version incompatible with the runner's Node version.
+**Breaking change:** this release converts the plugin from a Homebridge accessory
+plugin to a dynamic platform. Update your `config.json` before upgrading, or your
+accessories will disappear from HomeKit. See the [Configuration](README.md#configuration)
+section for the new format:
 
-## 3.5.2-beta.0
+```json
+"platforms": [
+  {
+    "platform": "Hygrotermograph",
+    "accessories": [
+      { "name": "Temperature & Humidity" }
+    ]
+  }
+]
+```
+
+Each accessory entry keeps the same keys as before (`type`, `address`, `temperatureName`,
+etc.) except the old `accessory` key, which is no longer used and can be removed.
 
 * Converted the plugin to a Homebridge dynamic platform (was an accessory plugin).
 * Fixed an invalid `required` field in `config.schema.json` flagged by Homebridge plugin verification.
