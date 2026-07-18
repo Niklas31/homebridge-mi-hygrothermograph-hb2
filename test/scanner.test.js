@@ -330,4 +330,14 @@ describe("scanner", () => {
     const scanner = new Scanner("de:ad:be:ef");
     assert.strictEqual(scanner.log, console);
   });
+
+  it("should throw when BLE libraries are not available", () => {
+    const { Scanner: ScannerWithoutNoble } = proxyquire("../lib/scanner", {
+      "@stoprocent/noble": null,
+    });
+    assert.throws(
+      () => new ScannerWithoutNoble("de:ad:be:ef", { log: mockLogger }),
+      /BLE libraries \(@stoprocent\/noble\) are not available/
+    );
+  });
 });
