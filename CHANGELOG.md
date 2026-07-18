@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.5.4
+
+* Made `@stoprocent/noble` an optional dependency and load it defensively, so the
+  plugin still loads on systems where the native BLE bindings fail to build
+  (some Raspberry Pi models); the affected accessory is skipped with a logged
+  error instead of preventing the whole plugin from loading.
+
 ## 3.5.3
 
 * Added a missing `name` property to the platform config schema, flagged by Homebridge plugin verification.
