@@ -904,6 +904,48 @@ describe("accessory", () => {
     assert.strictEqual(spyDebugLogger.callCount, 3);
   });
 
+  it("should queue values while disconnected and flush on connect", () => {
+    const accessory = new this.HygrothermographAccessory(mockLogger, {
+      mqtt: {
+        url: "mqtt://127.0.0.1",
+        temperatureTopic: "temp/",
+        humidityTopic: "humidity/",
+        batteryTopic: "battery/",
+      },
+    });
+    accessory.mqttClient.connected = false;
+    accessory.setTemperature(22.5);
+    accessory.setHumidity(60);
+    accessory.setBatteryLevel(95);
+
+    assert.strictEqual(accessory.pendingMQTTValues.size, 3);
+
+    accessory.mqttClient.connected = true;
+    const publishSpy = sinon.spy(accessory.mqttClient, "publish");
+    accessory.mqttClient.emit("connect");
+
+    assert(publishSpy.calledThrice);
+    assert(publishSpy.calledWith("temp/", "22.5"));
+    assert(publishSpy.calledWith("humidity/", "60"));
+    assert(publishSpy.calledWith("battery/", "95"));
+    assert.strictEqual(accessory.pendingMQTTValues.size, 0);
+  });
+
+  it("should not publish anything on reconnect when no values are pending", () => {
+    const accessory = new this.HygrothermographAccessory(mockLogger, {
+      mqtt: {
+        url: "mqtt://127.0.0.1",
+        temperatureTopic: "temp/",
+        batteryTopic: "battery/",
+      },
+    });
+    accessory.mqttClient.connected = true;
+    const publishSpy = sinon.spy(accessory.mqttClient, "publish");
+    accessory.mqttClient.emit("connect");
+
+    assert(publishSpy.notCalled);
+  });
+
   it("should set forceDiscovering to true when not set", () => {
     const accessory = new this.HygrothermographAccessory(mockLogger, {});
     assert.strictEqual(accessory.scanner.forceDiscovering, true);
